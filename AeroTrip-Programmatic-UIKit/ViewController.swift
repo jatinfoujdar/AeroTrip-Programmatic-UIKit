@@ -4,27 +4,24 @@
 //
 //  Created by jatin foujdar on 19/08/25.
 //
+
 import UIKit
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .systemBackground
-        
-        let label = UILabel()
-        label.text = "Welcome to AeroTrip!"
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        label.textColor = .label
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
+        view.backgroundColor = .white
 
-        // Center the label
+        let headerView = FlightHeaderView()
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(headerView)
+        
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 270)
         ])
     }
 }
-

@@ -37,3 +37,13 @@ enum FlightClassFlight : String, CaseIterable{
     }
     
 }
+
+enum DateType {
+    case depart
+    case returns
+}
+
+enum RouteType {
+    case from
+    case to
+}

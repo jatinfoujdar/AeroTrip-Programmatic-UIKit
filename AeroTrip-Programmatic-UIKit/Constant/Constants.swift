@@ -12,8 +12,8 @@ import UIKit
 struct Constants{
     
     //MARK: App Colors
-    static let primaryColor = UIColor(named: "PrimaryColor")
-    static let secondaryColor = UIColor(named: "SecondaryColor")
+    static let primaryColor = UIColor(named: "PrimaryColors")
+    static let secondaryColor = UIColor(named: "SecondaryColors")
     static let textColor = UIColor(named: "TextColor")
     static let titleColor = UIColor(named: "Title")
     static let selectedSeat = UIColor(named: "SelectedSeat")
