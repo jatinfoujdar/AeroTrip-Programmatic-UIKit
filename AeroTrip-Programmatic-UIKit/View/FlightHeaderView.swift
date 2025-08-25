@@ -17,8 +17,10 @@ class FlightHeaderView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Welcome to AeroTrip!"
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.text = "Book Your \n Flight!"
+        label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
+        label.numberOfLines = 0
+        label.textAlignment = .center
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -41,7 +43,7 @@ class FlightHeaderView: UIView {
             imageContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
             imageContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }

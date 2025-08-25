@@ -21,7 +21,7 @@ class ViewController: UIViewController {
             headerView.topAnchor.constraint(equalTo: view.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 270)
+            headerView.heightAnchor.constraint(equalToConstant: 300)
         ])
     }
 }
