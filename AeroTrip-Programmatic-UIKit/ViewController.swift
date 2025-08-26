@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "PrimaryColors") ?? .systemBlue
 
         let headerView = FlightHeaderView()
         headerView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +22,7 @@ class ViewController: UIViewController {
             headerView.topAnchor.constraint(equalTo: view.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 300)
+            headerView.heightAnchor.constraint(equalToConstant: 270)
         ])
     }
 }
@@ -33,5 +33,6 @@ struct ViewController_Previews: PreviewProvider {
         ViewControllerPreview {
             ViewController()
         }
+        .ignoresSafeArea()
     }
 }

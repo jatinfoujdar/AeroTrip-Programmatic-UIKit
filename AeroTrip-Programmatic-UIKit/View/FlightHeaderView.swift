@@ -18,7 +18,7 @@ class FlightHeaderView: UIView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Book Your \n Flight!"
-        label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .white
