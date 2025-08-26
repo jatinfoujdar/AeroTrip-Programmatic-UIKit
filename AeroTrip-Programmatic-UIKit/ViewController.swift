@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class ViewController: UIViewController {
 
@@ -23,5 +24,14 @@ class ViewController: UIViewController {
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             headerView.heightAnchor.constraint(equalToConstant: 300)
         ])
+    }
+}
+
+
+struct ViewController_Previews: PreviewProvider {
+    static var previews: some View {
+        ViewControllerPreview {
+            ViewController()
+        }
     }
 }
