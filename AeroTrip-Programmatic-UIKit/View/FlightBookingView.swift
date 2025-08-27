@@ -3,218 +3,346 @@ import UIKit
 class FlightBookingView: UIView {
     
  
+    private let imageContainer :UIImageView = {
+       let imageView = UIImageView()
+        imageView.image = UIImage(named: "Aeroplane")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     
-    private let fromLabel: UILabel = {
+    private let fromStack: UIStackView = {
+          let title = UILabel()
+          title.text = "From"
+          title.font = UIFont.systemFont(ofSize: 14)
+          title.textColor = .gray
+          
+          let city = UILabel()
+          city.text = "Sydney"
+          city.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+          city.textColor = .black
+          
+          let code = UILabel()
+          code.text = "(SYD)"
+          code.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+          code.textColor = .gray
+          
+          let stack = UIStackView(arrangedSubviews: [title, city, code])
+          stack.axis = .vertical
+          stack.alignment = .leading
+          stack.spacing = 4
+          stack.translatesAutoresizingMaskIntoConstraints = false
+          return stack
+      }()
+    
+    private let toStack: UIStackView = {
+           let title = UILabel()
+           title.text = "To"
+           title.font = UIFont.systemFont(ofSize: 14)
+           title.textColor = .gray
+           
+           let city = UILabel()
+           city.text = "London"
+           city.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+           city.textColor = .black
+           
+           let code = UILabel()
+           code.text = "(LCY)"
+           code.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+           code.textColor = .gray
+           
+           let stack = UIStackView(arrangedSubviews: [title, city, code])
+           stack.axis = .vertical
+           stack.alignment = .trailing
+           stack.spacing = 4
+           stack.translatesAutoresizingMaskIntoConstraints = false
+           return stack
+       }()
+    
+    private let fromToStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.alignment = .top
+        stack.spacing = 40
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let departStack: UIStackView = {
+        let title = UILabel()
+        title.text = "Depart"
+        title.font = UIFont.systemFont(ofSize: 14)
+        title.textColor = .gray
+
+        let date = UILabel()
+        date.text = "6/08/20"
+        date.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        date.textColor = .black
+
+        let stack = UIStackView(arrangedSubviews: [title, date])
+        stack.axis = .vertical
+        stack.alignment = .leading
+        stack.spacing = 4
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+
+    private let returnStack: UIStackView = {
+        let title = UILabel()
+        title.text = "Return"
+        title.font = UIFont.systemFont(ofSize: 14)
+        title.textColor = .gray
+
+        let date = UILabel()
+        date.text = "Select Date"
+        date.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        date.textColor = .lightGray
+        
+
+        let stack = UIStackView(arrangedSubviews: [title, date])
+        stack.axis = .vertical
+        stack.alignment = .trailing
+        stack.spacing = 4
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+
+    private let departReturnStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.alignment = .top
+        stack.spacing = 40
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+
+    private let passengerLuggageStack: UIStackView = {
+        let title = UILabel()
+        title.text = "Passenger & Luggage"
+        title.font = UIFont.systemFont(ofSize: 14)
+        title.textColor = .gray
+
+        // 👤 Person icon + label
+        
+        let personIcon = UIImageView(image: UIImage(systemName: "person.2.fill"))
+        personIcon.tintColor = .black
+        personIcon.contentMode = .scaleAspectFit
+        personIcon.translatesAutoresizingMaskIntoConstraints = false
+        personIcon.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        personIcon.heightAnchor.constraint(equalToConstant: 20).isActive = true
+
+        let personLabel = UILabel()
+        personLabel.text = "2 Adult"
+        personLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+
+        let personStack = UIStackView(arrangedSubviews: [personIcon, personLabel])
+        personStack.axis = .horizontal
+        personStack.spacing = 4
+
+        // 🧳 Luggage icon + label
+        let bagIcon = UIImageView(image: UIImage(systemName: "bag.fill"))
+        bagIcon.tintColor = .black
+        bagIcon.contentMode = .scaleAspectFit
+        bagIcon.translatesAutoresizingMaskIntoConstraints = false
+        bagIcon.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        bagIcon.heightAnchor.constraint(equalToConstant: 16).isActive = true
+
+        let bagLabel = UILabel()
+        bagLabel.text = "1 Bag"
+        bagLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+
+        let bagStack = UIStackView(arrangedSubviews: [bagIcon, bagLabel])
+        bagStack.axis = .horizontal
+        bagStack.spacing = 4
+
+        // ⚖️ Weight icon + label
+        let weightIcon = UIImageView(image: UIImage(systemName: "scalemass.fill"))
+        weightIcon.tintColor = .black
+        weightIcon.contentMode = .scaleAspectFit
+        weightIcon.translatesAutoresizingMaskIntoConstraints = false
+        weightIcon.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        weightIcon.heightAnchor.constraint(equalToConstant: 16).isActive = true
+
+        let weightLabel = UILabel()
+        weightLabel.text = "6kg"
+        weightLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+
+        let weightStack = UIStackView(arrangedSubviews: [weightIcon, weightLabel])
+        weightStack.axis = .horizontal
+        weightStack.spacing = 4
+
+        // Combine all into horizontal stack
+        let detailsStack = UIStackView(arrangedSubviews: [personStack, bagStack, weightStack])
+        detailsStack.axis = .horizontal
+        detailsStack.spacing = 60
+        detailsStack.alignment = .center
+        detailsStack.translatesAutoresizingMaskIntoConstraints = false
+
+        // Vertical stack: title + detail row
+        let stack = UIStackView(arrangedSubviews: [title, detailsStack])
+        stack.axis = .vertical
+        stack.alignment = .leading
+        stack.spacing = 4
+        stack.translatesAutoresizingMaskIntoConstraints = false
+
+        return stack
+    }()
+
+    private let classStack: UIStackView = {
+        let title = UILabel()
+        title.text = "Class"
+        title.font = UIFont.systemFont(ofSize: 14)
+        title.textColor = .gray
+
+        // 👤 Person icon + label
+        
+        let personIcon = UIImageView(image: UIImage(systemName: "figure.seated.side.right.fan"))
+        personIcon.tintColor = .black
+        personIcon.contentMode = .scaleAspectFit
+        personIcon.translatesAutoresizingMaskIntoConstraints = false
+        personIcon.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        personIcon.heightAnchor.constraint(equalToConstant: 20).isActive = true
+
+        let personLabel = UILabel()
+        personLabel.text = "Economy"
+        personLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+
+        let personStack = UIStackView(arrangedSubviews: [personIcon, personLabel])
+        personStack.axis = .horizontal
+        personStack.spacing = 4
+
+        // 🧳 Luggage icon + label
+        let bagIcon = UIImageView(image: UIImage(systemName: "figure.seated.side.right.steeringwheel"))
+        bagIcon.tintColor = .black
+        bagIcon.contentMode = .scaleAspectFit
+        bagIcon.translatesAutoresizingMaskIntoConstraints = false
+        bagIcon.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        bagIcon.heightAnchor.constraint(equalToConstant: 16).isActive = true
+
+        let bagLabel = UILabel()
+        bagLabel.text = "Business"
+        bagLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+
+        let bagStack = UIStackView(arrangedSubviews: [bagIcon, bagLabel])
+        bagStack.axis = .horizontal
+        bagStack.spacing = 4
+
+        // ⚖️ Weight icon + label
+        let weightIcon = UIImageView(image: UIImage(systemName: "carseat.right.fan.fill"))
+        weightIcon.tintColor = .black
+        weightIcon.contentMode = .scaleAspectFit
+        weightIcon.translatesAutoresizingMaskIntoConstraints = false
+        weightIcon.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        weightIcon.heightAnchor.constraint(equalToConstant: 16).isActive = true
+
+        let weightLabel = UILabel()
+        weightLabel.text = "Elite"
+        weightLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+
+        let weightStack = UIStackView(arrangedSubviews: [weightIcon, weightLabel])
+        weightStack.axis = .horizontal
+        weightStack.spacing = 4
+
+        // Combine all into horizontal stack
+        let detailsStack = UIStackView(arrangedSubviews: [personStack, bagStack, weightStack])
+        detailsStack.axis = .horizontal
+        detailsStack.spacing = 30
+        detailsStack.alignment = .center
+        detailsStack.translatesAutoresizingMaskIntoConstraints = false
+
+        // Vertical stack: title + detail row
+        let stack = UIStackView(arrangedSubviews: [title, detailsStack])
+        stack.axis = .vertical
+        stack.alignment = .leading
+        stack.spacing = 4
+        stack.translatesAutoresizingMaskIntoConstraints = false
+
+        return stack
+    }()
+
+    private let nonstopTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "From"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .darkGray
+        label.text = "Nonstop Flight"
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    private let fromTextField: UITextField = {
-        let textField = UITextField()
-        textField.text = "Sydney (SYD)"
-        textField.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        textField.borderStyle = .none
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
-    
-    private let toLabel: UILabel = {
-        let label = UILabel()
-        label.text = "To"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let toTextField: UITextField = {
-        let textField = UITextField()
-        textField.text = "London (LCY)"
-        textField.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        textField.borderStyle = .none
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
-    
-    private let departDateButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("06/08/20", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        button.setTitleColor(.black, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private let returnDateButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Return", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        button.setTitleColor(.gray, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private let passengersLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Passenger & Luggage"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let passengersTextField: UITextField = {
-        let textField = UITextField()
-        textField.text = "2 Kids"
-        textField.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        textField.borderStyle = .none
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
-    
-    private let classLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Class"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let economyButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Economy", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        button.setTitleColor(.black, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private let businessButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Business", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        button.setTitleColor(.gray, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private let eliteButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Elite", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        button.setTitleColor(.gray, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
+
     private let nonstopSwitch: UISwitch = {
-        let switchControl = UISwitch()
-        switchControl.isOn = false
-        switchControl.translatesAutoresizingMaskIntoConstraints = false
-        return switchControl
+        let toggle = UISwitch()
+        toggle.isOn = false
+        toggle.onTintColor = .systemBlue
+        toggle.translatesAutoresizingMaskIntoConstraints = false
+        return toggle
     }()
-    
-    private let nonstopLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Nonstop flights first"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+
+    private let nonstopStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 10
+        stack.alignment = .center
+        stack.distribution = .equalSpacing
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
     }()
-    
-    private let searchButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Search Flights", for: .normal)
-        button.backgroundColor = UIColor.orange
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        button.layer.cornerRadius = 10
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+
+
+
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         backgroundColor = .white
-        layer.cornerRadius = 20
+        layer.cornerRadius = 50
         clipsToBounds = true
         
         // Add subviews
+        addSubview(imageContainer)
+        fromToStack.addArrangedSubview(fromStack)
+        fromToStack.addArrangedSubview(toStack)
+        addSubview(fromToStack)
         
-        addSubview(fromLabel)
-        addSubview(fromTextField)
-        addSubview(toLabel)
-        addSubview(toTextField)
-        addSubview(departDateButton)
-        addSubview(returnDateButton)
-        addSubview(passengersLabel)
-        addSubview(passengersTextField)
-        addSubview(classLabel)
-        addSubview(economyButton)
-        addSubview(businessButton)
-        addSubview(eliteButton)
-        addSubview(nonstopLabel)
-        addSubview(nonstopSwitch)
-        addSubview(searchButton)
+        departReturnStack.addArrangedSubview(departStack)
+        departReturnStack.addArrangedSubview(returnStack)
+        addSubview(departReturnStack)
+        
+        addSubview(passengerLuggageStack)
+        addSubview(classStack)
+      
+        nonstopStack.addArrangedSubview(nonstopTitleLabel)
+        nonstopStack.addArrangedSubview(nonstopSwitch)
+        addSubview(nonstopStack)
         
         // Setup constraints
         NSLayoutConstraint.activate([
-         
+            imageContainer.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            imageContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
+            imageContainer.widthAnchor.constraint(equalToConstant: 80),
+            imageContainer.heightAnchor.constraint(equalToConstant: 80),
             
-            fromTextField.topAnchor.constraint(equalTo: fromLabel.bottomAnchor, constant: 5),
-            fromTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            fromTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            fromToStack.topAnchor.constraint(equalTo: topAnchor, constant: 30),
+            fromToStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            fromToStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             
-            toLabel.topAnchor.constraint(equalTo: fromTextField.bottomAnchor, constant: 10),
-            toLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            departReturnStack.topAnchor.constraint(equalTo: fromToStack.bottomAnchor, constant: 30),
+            departReturnStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            departReturnStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             
-            toTextField.topAnchor.constraint(equalTo: toLabel.bottomAnchor, constant: 5),
-            toTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            toTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            passengerLuggageStack.topAnchor.constraint(equalTo: departReturnStack.bottomAnchor, constant: 30),
+            passengerLuggageStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            passengerLuggageStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             
-            departDateButton.topAnchor.constraint(equalTo: toTextField.bottomAnchor, constant: 10),
-            departDateButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            
-            returnDateButton.topAnchor.constraint(equalTo: toTextField.bottomAnchor, constant: 10),
-            returnDateButton.leadingAnchor.constraint(equalTo: departDateButton.trailingAnchor, constant: 20),
-            
-            passengersLabel.topAnchor.constraint(equalTo: departDateButton.bottomAnchor, constant: 10),
-            passengersLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            
-            passengersTextField.topAnchor.constraint(equalTo: passengersLabel.bottomAnchor, constant: 5),
-            passengersTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            passengersTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            
-            classLabel.topAnchor.constraint(equalTo: passengersTextField.bottomAnchor, constant: 10),
-            classLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            
-            economyButton.topAnchor.constraint(equalTo: classLabel.bottomAnchor, constant: 5),
-            economyButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            
-            businessButton.topAnchor.constraint(equalTo: economyButton.topAnchor),
-            businessButton.leadingAnchor.constraint(equalTo: economyButton.trailingAnchor, constant: 20),
-            
-            eliteButton.topAnchor.constraint(equalTo: economyButton.topAnchor),
-            eliteButton.leadingAnchor.constraint(equalTo: businessButton.trailingAnchor, constant: 20),
-            
-            nonstopLabel.topAnchor.constraint(equalTo: economyButton.bottomAnchor, constant: 10),
-            nonstopLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            
-            nonstopSwitch.topAnchor.constraint(equalTo: nonstopLabel.topAnchor),
-            nonstopSwitch.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            
-            searchButton.topAnchor.constraint(equalTo: nonstopLabel.bottomAnchor, constant: 20),
-            searchButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            searchButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            searchButton.heightAnchor.constraint(equalToConstant: 50),
-            searchButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+           classStack.topAnchor.constraint(equalTo: passengerLuggageStack.bottomAnchor, constant: 30),
+           classStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+           classStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+        
+            nonstopStack.topAnchor.constraint(equalTo: classStack.bottomAnchor, constant: 30),
+            nonstopStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            nonstopStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
     }
     

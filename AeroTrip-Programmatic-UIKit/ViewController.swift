@@ -11,23 +11,24 @@ class ViewController: UIViewController {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(headerView)
         
-        let flightView = FlightBookingView() // Use FlightBookingView for the sheet
+        let flightView = FlightBookingView()
         flightView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(flightView)
         
         NSLayoutConstraint.activate([
-            // Header constraints
+          
             headerView.topAnchor.constraint(equalTo: view.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             headerView.heightAnchor.constraint(equalToConstant: 270),
-            
-            // Sheet constraints
-//            flightView.topAnchor.constraint(equalTo: headerView.bottomAnchor), // Position below header
-//            flightView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            flightView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            flightView.bottomAnchor.constraint(equalTo: view.bottomAnchor) // Extend to bottom
+
+           
+            flightView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            flightView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            flightView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            flightView.bottomAnchor.constraint(equalTo: view.bottomAnchor) 
         ])
+
     }
 }
 
