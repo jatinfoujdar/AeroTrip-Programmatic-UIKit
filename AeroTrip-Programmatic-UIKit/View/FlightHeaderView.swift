@@ -1,10 +1,3 @@
-//
-//  FlightHeaderView.swift
-//  AeroTrip-Programmatic-UIKit
-//
-//  Created by jatin foujdar on 25/08/25.
-//
-
 import UIKit
 
 class FlightHeaderView: UIView {
@@ -26,6 +19,7 @@ class FlightHeaderView: UIView {
         return label
     }()
     
+    
     private let roundTripButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Round Trip", for: .normal)
@@ -44,6 +38,24 @@ class FlightHeaderView: UIView {
         return button
     }()
     
+
+    private let roundTripUnderline: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.isHidden = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let oneWayUnderline: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+  
     private lazy var buttonStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [roundTripButton, oneWayButton])
         stack.axis = .horizontal
@@ -53,7 +65,6 @@ class FlightHeaderView: UIView {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,29 +75,65 @@ class FlightHeaderView: UIView {
         addSubview(imageContainer)
         addSubview(titleLabel)
         addSubview(buttonStack)
+        addSubview(roundTripUnderline)
+        addSubview(oneWayUnderline)
         
         imageContainer.translatesAutoresizingMaskIntoConstraints = false
         
+      
+        roundTripButton.addTarget(self, action: #selector(selectRoundTrip), for: .touchUpInside)
+        oneWayButton.addTarget(self, action: #selector(selectOneWay), for: .touchUpInside)
+        
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
-            // Background Image
+            
             imageContainer.topAnchor.constraint(equalTo: topAnchor),
             imageContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             imageContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
             imageContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            // Title label at the top
+         
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 70),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            // Buttons at the bottom
+         
             buttonStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            buttonStack.bottomAnchor.constraint(equalTo: bottomAnchor),
-            buttonStack.heightAnchor.constraint(equalToConstant: 40)
+            buttonStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            buttonStack.heightAnchor.constraint(equalToConstant: 40),
+            
+            
+            roundTripUnderline.topAnchor.constraint(equalTo: roundTripButton.bottomAnchor, constant: 2),
+            roundTripUnderline.centerXAnchor.constraint(equalTo: roundTripButton.centerXAnchor),
+            roundTripUnderline.widthAnchor.constraint(equalTo: roundTripButton.widthAnchor, multiplier: 0.8),
+            roundTripUnderline.heightAnchor.constraint(equalToConstant: 2),
+            
+            
+            oneWayUnderline.topAnchor.constraint(equalTo: oneWayButton.bottomAnchor, constant: 2),
+            oneWayUnderline.centerXAnchor.constraint(equalTo: oneWayButton.centerXAnchor),
+            oneWayUnderline.widthAnchor.constraint(equalTo: oneWayButton.widthAnchor, multiplier: 0.8),
+            oneWayUnderline.heightAnchor.constraint(equalToConstant: 2),
         ])
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+   
+    @objc private func selectRoundTrip() {
+        roundTripUnderline.isHidden = false
+        oneWayUnderline.isHidden = true
+       
+    }
+    
+    @objc private func selectOneWay() {
+        roundTripUnderline.isHidden = true
+        oneWayUnderline.isHidden = false
+        
     }
 }
