@@ -2,6 +2,7 @@ import UIKit
 
 class FlightBookingView: UIView {
     
+    
     private let departDateSelector = DateSelectorView(title: "Depart")
     private let returnDateSelector = DateSelectorView(title: "Return")
     
